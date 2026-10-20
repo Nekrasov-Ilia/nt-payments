@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';import {api} from '../worker/api.mjs';
+const url='https://example.test/api/leads',data={kind:'host',requestId:'web-12345678-1234-1234-1234-123456789abc',data:{name:'Test',company:'Test'}};
+assert.equal((await api(new Request(url,{method:'POST',headers:{Origin:'https://other.test'},body:'{}'}),{})).status,403);
+assert.equal((await api(new Request(url,{method:'POST',headers:{Origin:'https://example.test'},body:'{}'}),{})).status,503);
+const env={SHEETS_WEBHOOK_URL:'https://script.google.com/macros/s/test/exec'};
+let called=0;globalThis.fetch=async (endpoint,options)=>{called++;assert.equal(endpoint,env.SHEETS_WEBHOOK_URL);const payload=JSON.parse(options.body);return Response.json({ok:true,id:payload.requestId})};
+const request=()=>new Request(url,{method:'POST',headers:{Origin:'https://example.test'},body:JSON.stringify(data)});
+assert.equal((await api(request(),env)).status,200);assert.equal(called,1);
+globalThis.fetch=async()=>Response.json({ok:false,error:'Not saved'});assert.equal((await api(request(),env)).status,502);
+assert.equal((await api(new Request('https://example.test/api/config'),env)).status,200);
+console.log('PASS: same-origin gate, unconfigured failure, confirmed save, upstream failure and config. No live Sheet write attempted.');

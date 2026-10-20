@@ -1,0 +1,18 @@
+{
+  "name": "nt-payments-interview-concept",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Independent NT.Payments redesign interview concept",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "start": "node scripts/dev-server.mjs",
+    "build": "node scripts/build.mjs",
+    "check": "node --check src/app.js && node --check src/crm.js && node --check src/form-connection.js && node --check worker/api.mjs",
+    "test": "node tests/api.mjs && node tests/crm.cjs && node tests/snapshot.cjs",
+    "deploy": "npx wrangler@4 deploy"
+  }
+}

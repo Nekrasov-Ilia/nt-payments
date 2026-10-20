@@ -1,0 +1,12 @@
+{
+  "name": "nt-payments-interview-concept",
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-10-20",
+  "assets": {
+    "directory": "./src",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  }
+}
