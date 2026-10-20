@@ -1,0 +1,13 @@
+# NT.Payments — Independent Website Concept
+
+> Independent portfolio redesign project, not the official NT.Payments website. Product availability, payment services and branch locations must be confirmed with https://ntpayments.com/en/.
+
+- [Self-Service Payment Kiosks in UAE | NT.Payments Concept](https://nt-payments.menefon.workers.dev/): Self-service payment kiosks in the UAE.
+- [Host a Payment Kiosk | NT.Payments Website Concept](https://nt-payments.menefon.workers.dev/host-a-kiosk/): Hosting payment kiosks at commercial locations.
+- [Payment Channels for Service Providers | NT.Payments Concept](https://nt-payments.menefon.workers.dev/providers/): Payment services and provider partnerships.
+- [NT.Wallet Mobile Payments | Independent Design Concept](https://nt-payments.menefon.workers.dev/wallet/): Mobile payments and NT.Wallet concept.
+- [Contact and Business Enquiries | NT.Payments Concept](https://nt-payments.menefon.workers.dev/contact/): Contact information and business enquiries.
+- [Payment and Kiosk Support | NT.Payments Concept](https://nt-payments.menefon.workers.dev/support/): Self-service payment support.
+- [Find a Payment Kiosk | NT.Payments Website Concept](https://nt-payments.menefon.workers.dev/find-a-kiosk/): Kiosk finder and payment locations.
+
+The demonstration CRM is browser-local, is not a production CRM and does not provide shared customer records.

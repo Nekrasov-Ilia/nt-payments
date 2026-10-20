@@ -12,7 +12,7 @@
     "start": "node scripts/dev-server.mjs",
     "build": "node scripts/build.mjs",
     "check": "node --check src/app.js && node --check src/crm.js && node --check src/form-connection.js && node --check worker/api.mjs",
-    "test": "node tests/api.mjs && node tests/crm.cjs && node tests/snapshot.cjs",
-    "deploy": "npx wrangler@4 deploy"
+    "test": "node tests/api.mjs && node tests/crm.cjs && node tests/snapshot.cjs && node tests/seo.mjs",
+    "deploy": "npm run build && npx wrangler@4 deploy"
   }
 }
