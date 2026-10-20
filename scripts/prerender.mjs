@@ -76,7 +76,7 @@ for(const page of pages){
  let html=rewrite(base.replace(/<title>[\s\S]*?<\/title>/,'<title>'+escapeHTML(page.title)+'</title>')
  .replace(/<meta name="description"[^>]*>/,'<meta name="description" content="'+escapeHTML(page.description)+'">')
  .replace('</head>',seo+'</head>')
- .replace(/<main id="main" tabindex="-1">[\s\S]*?<\/main>/,'<main id="main" tabindex="-1">'+content[page.key]()+'</main>'));
+ .replace(/<main id="main" tabindex="-1">[\s\S]*?<\/main>/,'<main id="main" tabindex="-1">'+content[page.key==='services'?'servicesPage':page.key]()+'</main>'));
  html=html.replace(/(href|src)="(style\.css|assets\/|app\.js|crm\.js|form-connection\.js|lead-snapshot\.js)/g,(_,attr,path)=>attr+'="/'+path);
  const dest='src/'+(page.slug?page.slug+'/':'')+'index.html';
  await fs.mkdir(dest.slice(0,dest.lastIndexOf('/')),{recursive:true});
