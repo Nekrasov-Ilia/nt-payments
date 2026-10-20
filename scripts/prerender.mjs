@@ -50,14 +50,21 @@ const pages=[
     "title": "Find a Payment Kiosk | NT.Payments Website Concept",
     "description": "Browse a concept kiosk-finder experience for Dubai, Jeddah and Doha. Verify current terminal locations with official NT.Payments sources.",
     "topic": "Kiosk finder and payment locations"
+  },
+  {
+    "slug": "payments/list-of-services",
+    "key": "services",
+    "title": "Payment Services Directory | NT.Payments Concept",
+    "description": "Browse mobile recharge, utility bills, transport, entertainment and international top-up services in this independent NT.Payments website concept.",
+    "topic": "Self-service kiosk payment services"
   }
 ];
-const paths={"home":"/","host":"/host-a-kiosk/","providers":"/providers/","wallet":"/wallet/","contacts":"/contact/","support":"/support/","find":"/find-a-kiosk/"};
+const paths={"home":"/","host":"/host-a-kiosk/","providers":"/providers/","wallet":"/wallet/","contacts":"/contact/","support":"/support/","find":"/find-a-kiosk/","services":"/payments/list-of-services/"};
 const source=await fs.readFile('src/app.js','utf8');
 const init=source.indexOf("document.querySelector('.menu').onclick=");
 if(init<0)throw new Error('Prerender source boundary changed');
 const context={};
-vm.runInNewContext(source.slice(0,init)+'\nglobalThis.seoPages={home,host,providers,wallet,contacts,supportPage,finderPage};',context,{timeout:5000});
+vm.runInNewContext(source.slice(0,init)+'\nglobalThis.seoPages={home,host,providers,wallet,contacts,supportPage,finderPage,servicesPage};',context,{timeout:5000});
 const content=context.seoPages;
 const base=(await fs.readFile('src/index.html','utf8')).replace(/<!-- SEO START -->[\s\S]*?<!-- SEO END -->\s*/g,'');
 const escapeHTML=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
@@ -65,11 +72,12 @@ const rewrite=html=>html.replace(/href="#([^"]+)"/g,(whole,anchor)=>{const [key,
 for(const page of pages){
  const url=root+'/'+(page.slug?page.slug+'/':'');
  const schema={'@context':'https://schema.org','@type':'WebPage','@id':url+'#webpage',url,name:page.title,description:page.description,inLanguage:'en',about:{'@type':'Thing',name:page.topic},isPartOf:{'@type':'WebSite',name:'NT.Payments — Independent Website Concept',url:root+'/'}};
- const seo=['<!-- SEO START -->','<base href="/">','<link rel="canonical" href="'+url+'">','<meta name="robots" content="index,follow,max-image-preview:large">','<meta property="og:type" content="website">','<meta property="og:site_name" content="NT.Payments — Independent Website Concept">','<meta property="og:title" content="'+escapeHTML(page.title)+'">','<meta property="og:description" content="'+escapeHTML(page.description)+'">','<meta property="og:url" content="'+url+'">','<meta property="og:image" content="'+root+'/assets/kiosk-hero-enhanced.png">','<meta name="twitter:card" content="summary_large_image">','<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script>','<!-- SEO END -->'].join('\n');
- const html=rewrite(base.replace(/<title>[\s\S]*?<\/title>/,'<title>'+escapeHTML(page.title)+'</title>')
+ const seo=['<!-- SEO START -->','<link rel="canonical" href="'+url+'">','<meta name="robots" content="index,follow,max-image-preview:large">','<meta property="og:type" content="website">','<meta property="og:site_name" content="NT.Payments — Independent Website Concept">','<meta property="og:title" content="'+escapeHTML(page.title)+'">','<meta property="og:description" content="'+escapeHTML(page.description)+'">','<meta property="og:url" content="'+url+'">','<meta property="og:image" content="'+root+'/assets/kiosk-hero-enhanced.png">','<meta name="twitter:card" content="summary_large_image">','<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script>','<!-- SEO END -->'].join('\n');
+ let html=rewrite(base.replace(/<title>[\s\S]*?<\/title>/,'<title>'+escapeHTML(page.title)+'</title>')
  .replace(/<meta name="description"[^>]*>/,'<meta name="description" content="'+escapeHTML(page.description)+'">')
  .replace('</head>',seo+'</head>')
  .replace(/<main id="main" tabindex="-1">[\s\S]*?<\/main>/,'<main id="main" tabindex="-1">'+content[page.key]()+'</main>'));
+ html=html.replace(/(href|src)="(style\.css|assets\/|app\.js|crm\.js|form-connection\.js|lead-snapshot\.js)/g,(_,attr,path)=>attr+'="/'+path);
  const dest='src/'+(page.slug?page.slug+'/':'')+'index.html';
  await fs.mkdir(dest.slice(0,dest.lastIndexOf('/')),{recursive:true});
  await fs.writeFile(dest,html,'utf8');

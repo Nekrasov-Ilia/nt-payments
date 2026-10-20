@@ -11,3 +11,5 @@
 - [Find a Payment Kiosk | NT.Payments Website Concept](https://nt-payments.menefon.workers.dev/find-a-kiosk/): Kiosk finder and payment locations.
 
 The demonstration CRM is browser-local, is not a production CRM and does not provide shared customer records.
+
+- [Payment Services Directory](https://nt-payments.menefon.workers.dev/payments/list-of-services/): Example categories based on the published NT.Payments service catalog; confirm availability directly.
