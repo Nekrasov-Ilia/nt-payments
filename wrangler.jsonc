@@ -1,5 +1,5 @@
 {
-  "name": "nt-payments-interview-concept",
+  "name": "nt-payments",
   "main": "worker/index.mjs",
   "compatibility_date": "2026-10-20",
   "assets": {
