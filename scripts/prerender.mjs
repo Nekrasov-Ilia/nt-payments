@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import vm from 'node:vm';
 const root="https://nt-payments.menefon.workers.dev";
 const pages=[
+ {slug:"rewards",key:"rewards",title:"Rewards | NT.Payments Campaign Concept",description:"Explore a proposed one-month loyalty campaign: three gold prizes and a welcome bonus after a first eligible NT.Wallet payment. Not open for entry.",topic:"Proposed kiosk-to-wallet loyalty campaign"},
   {
     "slug": "",
     "key": "home",
@@ -59,12 +60,12 @@ const pages=[
     "topic": "Self-service kiosk payment services"
   }
 ];
-const paths={"home":"/","host":"/host-a-kiosk/","providers":"/providers/","wallet":"/wallet/","contacts":"/contact/","support":"/support/","find":"/find-a-kiosk/","services":"/payments/list-of-services/"};
+const paths={"home":"/","host":"/host-a-kiosk/","providers":"/providers/","wallet":"/wallet/","contacts":"/contact/","support":"/support/","find":"/find-a-kiosk/","services":"/payments/list-of-services/","rewards":"/rewards/"};
 const source=await fs.readFile('src/app.js','utf8');
 const init=source.indexOf("document.querySelector('.menu').onclick=");
 if(init<0)throw new Error('Prerender source boundary changed');
 const context={};
-vm.runInNewContext(source.slice(0,init)+'\nglobalThis.seoPages={home,host,providers,wallet,contacts,supportPage,finderPage,servicesPage};',context,{timeout:5000});
+vm.runInNewContext((await fs.readFile('src/rewards.js','utf8'))+'\n'+source.slice(0,init)+'\nglobalThis.seoPages={rewards,home,host,providers,wallet,contacts,supportPage,finderPage,servicesPage};',context,{timeout:5000});
 const content=context.seoPages;
 const base=(await fs.readFile('src/index.html','utf8')).replace(/<!-- SEO START -->[\s\S]*?<!-- SEO END -->\s*/g,'');
 const escapeHTML=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');

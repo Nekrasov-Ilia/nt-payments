@@ -132,3 +132,13 @@ git push -u origin main
 ```
 
 В архиве нет `.git`, node_modules, токенов, `.env` с реальными значениями или настроек Sites конкретного аккаунта. GitHub Actions запускает только проверки и сборку, без автоматической публикации.
+
+## Rewards campaign concept
+
+Open `/rewards/` for the proposed new-customer campaign: three gold prizes,
+manual hero carousel, five soft 3D journey illustrations, and a step-by-step
+explainer with visible details. The preview does not issue entries or bonuses.
+
+Edit `src/rewards.js` for content and interactions and `src/rewards.css` for styling.
+Optimized illustrations are in `src/assets/rewards-*.webp`; promotional PNGs are
+also included. Run `npm run build` after editing to refresh prerendered pages.
